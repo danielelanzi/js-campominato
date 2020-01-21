@@ -18,9 +18,11 @@ alert('Campo Minato Il computer deve generare 16 numeri casuali da 1 a 100. In s
 var mine = [];
 var numeroUtente;
 var check;
-var i = 0
-for (let i = 0; i < 16; i++) {
-  mine.push(getRandomNumber(1,100));
+for (var i = 0; i < 16; i++) {
+  var randomPc = getRandomNumber(1,100);
+  if (mine.includes(randomPc) == false) {
+    mine.push(randomPc);
+  }
 }
 console.log('Numero casuale da 1 a 100 generato dal pc: ' + mine);
 
@@ -59,12 +61,13 @@ function getRandomNumber(min,max) {
 //Trova numero nell'array
 function checkNum(num, array) {
   var i = 0;
-  do {
-    if (num == array[i])
-    return true;
-    else i++;
-  } while (i < array.length);
-  return false;
+  while (i < array.length) {
+    if (num == array[i]){
+      return true;
+    } else {
+      i++;
+    }
+  }return false;
 }
 
 // Ricarica pagina
