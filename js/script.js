@@ -13,7 +13,6 @@
 // Proviamo ad inserire delle piccole funzioni, ogni funzione deve svolgere un compito preciso e restiturci qualcosa.
 
 alert('Campo Minato Il computer deve generare 16 numeri casuali da 1 a 100. In seguito deve chiedere all\’utente di inserire per 84 volte un numero da 1 a 100, se il numero è presente nella lista dei numeri generati, la partita termina, altrimenti continua chiedendo all’utente un altro numero. La partita termina quando il giocatore inserisce un numero “vietato”, ovvero presente nella lista di numeri random, o raggiunge il numero massimo possibile di tentativi consentiti. Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha inserito un numero consentito.');
-var points = 0;
 
 // Push in array solo se il numero non è già stato generato dal pc
   var randomArray = [];
@@ -26,10 +25,37 @@ var points = 0;
   console.log('Numeri casuali da 1 a 100 generati dal pc: ' + randomArray.sort());
 
 if (confirm('Pronto per giocare?')) {
+    var numLevel = 0;
+    var exit = false
+    while (numLevel == 0) {
+      if (selectionLevel = parseInt(prompt('Scegli il livello di difficoltà: \nFacile: inserisci 0\nMedio: inserisci 1\nDifficile: inserisci 2'))) {
+        switch (selectionLevel) {
+          case 0:
+            numLevel = 100;
+            attempts = 84;
+            break;
+          case 1:
+          numLevel = 80;
+          attempts = 64;
+            break;
+          case 2:
+          numLevel = 50;
+          attempts = 34;
+            break;
+          case 5:
+          numLevel = 100;
+          attempts = 5;
+            break;
+        }
+      }else {
+        alert('Hai annullato il gioco, ricarica la pagina per giocare di nuovo');
+      }
+      numLevel++;
+    }
     var numArray = [];
-    var numPrompt = 5;
+    var points = 0
     var findBomb = false;
-    while (numArray.length < numPrompt && findBomb == false) {
+    while (numArray.length < attempts && findBomb == false) {
       var numUser = parseInt(prompt('Scegli un numero da 1 a 100'));
       console.log('Inserimento utente:' + numUser);
       if (checkNum(randomArray, numUser) == true) {
