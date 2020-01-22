@@ -13,66 +13,79 @@
 // Proviamo ad inserire delle piccole funzioni, ogni funzione deve svolgere un compito preciso e restiturci qualcosa.
 
 alert('Campo Minato Il computer deve generare 16 numeri casuali da 1 a 100. In seguito deve chiedere all\’utente di inserire per 84 volte un numero da 1 a 100, se il numero è presente nella lista dei numeri generati, la partita termina, altrimenti continua chiedendo all’utente un altro numero. La partita termina quando il giocatore inserisce un numero “vietato”, ovvero presente nella lista di numeri random, o raggiunge il numero massimo possibile di tentativi consentiti. Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha inserito un numero consentito.');
+var points = 0;
 
-
-var mine = [];
-var numeroUtente;
-var check;
-for (var i = 0; i < 16; i++) {
-  var randomPc = getRandomNumber(1,100);
-  if (mine.includes(randomPc) == false) {
-    mine.push(randomPc);
+// Push in array solo se il numero non è già stato generato dal pc
+  var randomArray = [];
+  for (var i = 0; i < 16; i++) {
+    var randomPc = getRandomNumber(1,100);
+    if (randomArray.includes(randomPc) == false) {
+      randomArray.push(randomPc);
+    }
   }
-}
-console.log('Numero casuale da 1 a 100 generato dal pc: ' + mine);
+  console.log('Numeri casuali da 1 a 100 generati dal pc: ' + randomArray.sort());
 
 if (confirm('Pronto per giocare?')) {
-  do {
-    do {
-      var numeroUtente = parseInt(prompt('Scegli un numero da 1 a 100'));
-      if (numeroUtente > 100 || numeroUtente < 1 || isNaN(numeroUtente))  {
+    var numArray = [];
+    var numPrompt = 5;
+    var findBomb = false;
+    while (numArray.length < numPrompt && findBomb == false) {
+      var numUser = parseInt(prompt('Scegli un numero da 1 a 100'));
+      console.log('Inserimento utente:' + numUser);
+      if (checkNum(randomArray, numUser) == true) {
+        alert('Peccato!!! Hai perso! Ricarica la pagina e ritenta.');
+        findBomb = true;
+        points++;
+        alert('Il tuo punteggio è di: ' + points);
+      }
+      else if (numUser > 100 || numUser < 1 || isNaN(numUser)) {
         alert('Devi inserire un numero da 1 a 100');
       }
-    } while (isNaN(numeroUtente));
-    console.log('Numeri selezionati: ' + numeroUtente);
-    check = checkNum(numeroUtente, mine);
-    i++;
-  } while (i < 84 && check != true);
-  if (check == true) {
-    alert('Peccato!!! Hai perso! Ricarica la pagina e ritenta.');
-  } else if (check != true) {
-    alert('Fantastico!!! Hai Vinto! Per vincere di nuovo, ricarica la pagina.');
-  }
-} else {
-  alert('Hai annullato il gioco, ricarica la pagina per giocare di nuovo');
-};
+      else if (checkNum(numArray, numUser) == false) {
+        numArray.push(numUser);
+      }
+      else {
+        alert('Hai già inserito questo numero!')
+      }
+    }
+    console.log('Numeri inseriti da 1 a 100 dall\'utente: ' + numArray.sort());
+    if (checkNum(randomArray, numUser) != true) {
+      alert('Fantastico!!! Hai Vinto! Per vincere di nuovo, ricarica la pagina.');
+      points++;
+      alert('Il tuo punteggio è di: ' + points);
+    }
+  }else {
+    alert('Hai annullato il gioco, ricarica la pagina per giocare di nuovo');
+  };
 
-// Funzioni
+
+
+// // Funzioni
 
 // Numero random
 function getRandomNumber(min,max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   var random = Math.floor(Math.random() * (max - min + 1)) + min;
-
   return random;
 };
-
-//Trova numero nell'array
-function checkNum(num, array) {
-  var i = 0;
-  while (i < array.length) {
-    if (num == array[i]){
-      return true;
-    } else {
-      i++;
-    }
-  }return false;
-}
 
 // Ricarica pagina
 function ricaricaPage() {
   location.replace('file:///Users/danielelanzi/Documents/boolean-courses/consegna-esercizi/js-campominato/index.html');
 };
+
+//Trova numero nell'array
+function checkNum(array, num){
+  var i = 0;
+  var result = false;
+  while (i < array.length && result == false) {
+    if (array[i] == num) {
+      result = true;
+    }
+    i++;
+  }
+  return result;
+}
 
 // <===========================FINE========================>
