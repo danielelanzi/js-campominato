@@ -26,19 +26,21 @@ alert('Campo Minato Il computer deve generare 16 numeri casuali da 1 a 100. In s
 
 if (confirm('Pronto per giocare?')) {
     var numLevel = 0;
-    var exit = false
+    var selectionLevel;
+    var attempts;
+    var exit;
     while (numLevel == 0) {
-      if (selectionLevel = parseInt(prompt('Scegli il livello di difficoltà: \nFacile: inserisci 0\nMedio: inserisci 1\nDifficile: inserisci 2'))) {
+      if (selectionLevel = parseInt(prompt('Scegli il livello di difficoltà: \nFacile: inserisci 1\nMedio: inserisci 2\nDifficile: inserisci 3'))) {
         switch (selectionLevel) {
-          case 0:
+          case 1:
             numLevel = 100;
             attempts = 84;
             break;
-          case 1:
+          case 2:
           numLevel = 80;
           attempts = 64;
             break;
-          case 2:
+          case 3:
           numLevel = 50;
           attempts = 34;
             break;
@@ -47,10 +49,10 @@ if (confirm('Pronto per giocare?')) {
           attempts = 5;
             break;
         }
+        exit = attempts;
       }else {
         alert('Hai annullato il gioco, ricarica la pagina per giocare di nuovo');
       }
-      numLevel++;
     }
     var numArray = [];
     var points = 0
